@@ -128,6 +128,9 @@ services:
     networks:
       loki: null
     ports:
+    - protocol: tcp
+      published: 513
+      target: 513
     - protocol: udp
       published: 514
       target: 514
