@@ -132,6 +132,9 @@ services:
       published: 513
       target: 513
     - protocol: udp
+      published: 513
+      target: 513
+    - protocol: udp
       published: 514
       target: 514
     - protocol: tcp
