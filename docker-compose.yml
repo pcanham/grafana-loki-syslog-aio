@@ -67,7 +67,7 @@ services:
       - -f
       - http://localhost:9000/minio/health/live
       timeout: 20s
-    image: minio/minio:latest
+    image: minio/minio:RELEASE.2020-10-28T08-16-50Z-50-g120d19d71
     networks:
       loki: null
     ports:
