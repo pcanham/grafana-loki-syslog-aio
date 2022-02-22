@@ -23,7 +23,7 @@ services:
       GF_AUTH_BASIC_ENABLED: "false"
       GF_AUTH_DISABLE_LOGIN_FORM: "true"
       GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/no_folder/loki_syslog_aio_overview.json
-    image: grafana/grafana:8.1.2
+    image: grafana/grafana:8.4.1
     networks:
       loki: null
     ports:
@@ -40,7 +40,7 @@ services:
     container_name: loki
     depends_on:
     - minio
-    image: grafana/loki:2.3.0
+    image: grafana/loki:2.4.2
     networks:
       loki: null
     ports:
@@ -51,7 +51,7 @@ services:
     volumes:
     - ./config/loki-config-s3.yml:/etc/loki/loki-config.yml:ro
   minio:
-    command: -c 'mkdir -p /data/loki && /usr/bin/minio server /data'
+    command: -c 'mkdir -p /data/loki && /usr/bin/docker-entrypoint.sh minio server /data'
     container_name: minio
     entrypoint: sh
     environment:
@@ -67,7 +67,7 @@ services:
       - -f
       - http://localhost:9000/minio/health/live
       timeout: 20s
-    image: minio/minio:RELEASE.2020-10-28T08-16-50Z-50-g120d19d71
+    image: minio/minio:latest
     networks:
       loki: null
     ports:
@@ -106,7 +106,7 @@ services:
   promtail:
     command: -config.file=/etc/promtail/promtail-config.yml
     container_name: promtail
-    image: grafana/promtail:2.3.0
+    image: grafana/promtail:2.4.2
     networks:
       loki: null
     ports:
@@ -143,4 +143,5 @@ services:
     restart: always
     volumes:
     - ./config/syslog-ng.conf:/etc/syslog-ng/syslog-ng.conf:ro
+    - ./config/syslog-ng/:/etc/syslog-ng/patterns:ro
 version: '3.3'
