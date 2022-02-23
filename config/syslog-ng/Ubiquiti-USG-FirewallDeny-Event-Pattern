@@ -9,7 +9,7 @@
         <examples>
           <example>
             <test_message program="kernel">[LAN_IN-2003-D]IN=eth1 OUT=pppoe0 MAC=80:2a:a8:cd:af:e0:40:8d:5c:4c:04:58:08:00 SRC=192.168.1.5 DST=209.222.18.218 LEN=70 TOS=0x00 PREC=0x00 TTL=127 ID=13532 PROTO=UDP SPT=41743 DPT=53 LEN=50</test_message>
-            <test_values>
+            <!-- <test_values> -->
               <test_value name="s0">pppoe0</test_value>
               <test_value name="s1">eth1</test_value>
               <test_value name="s2">LAN_IN-2003</test_value>
@@ -18,7 +18,7 @@
               <test_value name="i2">41743</test_value>
               <test_value name="i3">209.222.18.218</test_value>
               <test_value name="i4">53</test_value>
-            <test_values>
+            <!-- <test_values> -->
           </example>
         </examples>
       </rule>
