@@ -4,6 +4,10 @@ services:
   cadvisor:
     container_name: cadvisor
     image: gcr.io/cadvisor/cadvisor:latest
+    logging:
+      options:
+        max-size: "100m"
+        max-file: "5"
     networks:
       loki: null
     ports:
@@ -24,6 +28,10 @@ services:
       GF_AUTH_DISABLE_LOGIN_FORM: "true"
       GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/no_folder/loki_syslog_aio_overview.json
     image: grafana/grafana:8.4.1
+    logging:
+      options:
+        max-size: "100m"
+        max-file: "5"
     networks:
       loki: null
     ports:
@@ -41,6 +49,10 @@ services:
     depends_on:
     - minio
     image: grafana/loki:2.4.2
+    logging:
+      options:
+        max-size: "100m"
+        max-file: "5"
     networks:
       loki: null
     ports:
@@ -68,6 +80,10 @@ services:
       - http://localhost:9000/minio/health/live
       timeout: 20s
     image: minio/minio:latest
+    logging:
+      options:
+        max-size: "100m"
+        max-file: "5"
     networks:
       loki: null
     ports:
@@ -95,6 +111,10 @@ services:
     - --web.enable-lifecycle
     container_name: prometheus
     image: prom/prometheus:latest
+    logging:
+      options:
+        max-size: "100m"
+        max-file: "5"
     networks:
       loki: null
     ports:
@@ -107,6 +127,10 @@ services:
     command: -config.file=/etc/promtail/promtail-config.yml
     container_name: promtail
     image: grafana/promtail:2.4.2
+    logging:
+      options:
+        max-size: "100m"
+        max-file: "5"
     networks:
       loki: null
     ports:
@@ -125,6 +149,10 @@ services:
     depends_on:
     - promtail
     image: balabit/syslog-ng:latest
+    logging:
+      options:
+        max-size: "100m"
+        max-file: "5"
     networks:
       loki: null
     ports:
