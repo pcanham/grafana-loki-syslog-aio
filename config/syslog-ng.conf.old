@@ -1,0 +1,74 @@
+#############################################################################
+# Default syslog-ng.conf file which collects all local logs into a
+# single file called /var/log/messages tailored to container usage.
+#
+# The changes from the stock, default syslog-ng.conf file is that we've
+# dropped the system() source that is not needed and that we enabled network
+# connections using default-network-drivers(). Customize as needed and
+# override using the -v option to docker, such as:
+#
+#  docker run ...  -v "$PWD/syslog-ng.conf":/etc/syslog-ng/syslog-ng.conf
+#
+
+@version: 3.35
+@include "scl.conf"
+
+source s_local {
+	internal();
+};
+
+source s_network {
+	default-network-drivers(
+		# NOTE: TLS support
+		#
+		# the default-network-drivers() source driver opens the TLS
+		# enabled ports as well, however without an actual key/cert
+		# pair they will not operate and syslog-ng would display a
+		# warning at startup.
+		#
+		#tls(key-file("/path/to/ssl-private-key") cert-file("/path/to/ssl-cert"))
+	);
+};
+
+source s_network_tcp {
+  network(
+    port(513)
+    transport("tcp")
+    );
+};
+
+source s_network_udp {
+  network(
+    port("513")
+    transport("udp")
+    );
+};
+
+parser p_ubiquiti_usg {
+    db-parser(
+        file("/etc/syslog-ng/patterns/Ubiquiti-USG-FirewallDeny-Event-Pattern")
+    );
+};
+
+# Parser - p_iptables_parser
+parser p_iptables_parser {
+    iptables-parser(
+    );
+};
+
+destination d_loki_tcp {
+	syslog("promtail" transport("tcp") port("1514"));
+};
+
+log {
+        source(s_local);
+        source(s_network);
+        source(s_network_tcp);
+        source(s_network_udp);
+
+        parser(p_ubiquiti_usg);
+        parser(p_iptables_parser);
+
+        destination(d_loki_tcp);
+};
+
