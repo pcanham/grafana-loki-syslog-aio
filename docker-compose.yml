@@ -167,6 +167,9 @@ services:
       published: 514
       target: 514
     - protocol: tcp
+      published: 514
+      target: 514
+    - protocol: tcp
       published: 601
       target: 601
     restart: always
