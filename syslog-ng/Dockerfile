@@ -4,6 +4,11 @@ FROM balabit/syslog-ng:latest
 ARG GEOIP_ACCOUNTID
 ARG GEOIP_LICENSE
 
+## for apt to be non-interactive
+ENV DEBIAN_FRONTEND noninteractive
+ENV DEBCONF_NONINTERACTIVE_SEEN true
+ENV TZ=Etc/UTC
+
 RUN apt-get update && apt-get install software-properties-common -y && \
     apt install mmdb-bin syslog-ng-mod-geoip2 tar gzip autogen autoconf libtool libgeoip-dev wget -y && \
     apt install libnet-cidr-lite-perl libtext-csv-xs-perl libgeoip2-perl geoip-database geoip-bin geoip-database-extra python3-pip python3-jinja2 -y
