@@ -10,9 +10,9 @@ ENV DEBCONF_NONINTERACTIVE_SEEN true
 ENV TZ=Etc/UTC
 
 RUN apt-get update \
-    && apt-get -y install software-properties-common \
-    && apt-get -y install mmdb-bin syslog-ng-mod-geoip2 tar gzip autogen autoconf libtool libgeoip-dev wget \
-    && apt-get -y install libnet-cidr-lite-perl libtext-csv-xs-perl libgeoip2-perl geoip-database geoip-bin geoip-database-extra python3-pip python3-jinja2
+    && apt-get -y install --force-yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" software-properties-common \
+    && apt-get -y install --force-yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" mmdb-bin syslog-ng-mod-geoip2 tar gzip autogen autoconf libtool libgeoip-dev wget \
+    && apt-get -y install --force-yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" libnet-cidr-lite-perl libtext-csv-xs-perl libgeoip2-perl geoip-database geoip-bin geoip-database-extra python3-pip python3-jinja2
 
 # SOURCE: https://www.maxmind.com/en/accounts/621041/license-key/create
 RUN set -x; mkdir -p /geoip && \
