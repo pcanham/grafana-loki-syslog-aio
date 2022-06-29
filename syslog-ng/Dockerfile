@@ -9,15 +9,16 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
 ENV TZ=Etc/UTC
 
-RUN apt-get update && apt-get install software-properties-common -y && \
-    apt install mmdb-bin syslog-ng-mod-geoip2 tar gzip autogen autoconf libtool libgeoip-dev wget -y && \
-    apt install libnet-cidr-lite-perl libtext-csv-xs-perl libgeoip2-perl geoip-database geoip-bin geoip-database-extra python3-pip python3-jinja2 -y
+RUN apt-get update \
+    && apt-get -y install software-properties-common \
+    && apt-get -y install mmdb-bin syslog-ng-mod-geoip2 tar gzip autogen autoconf libtool libgeoip-dev wget \
+    && apt-get -y install libnet-cidr-lite-perl libtext-csv-xs-perl libgeoip2-perl geoip-database geoip-bin geoip-database-extra python3-pip python3-jinja2
 
 # SOURCE: https://www.maxmind.com/en/accounts/621041/license-key/create
 RUN set -x; mkdir -p /geoip && \
     cd /geoip && \
-    wget https://github.com/maxmind/geoipupdate/releases/download/v4.8.0/geoipupdate_4.8.0_linux_amd64.deb && \
-    dpkg -i geoipupdate_4.8.0_linux_amd64.deb && \
+    wget https://github.com/maxmind/geoipupdate/releases/download/v4.9.0/geoipupdate_4.9.0_linux_amd64.deb && \
+    dpkg -i geoipupdate_4.9.0_linux_amd64.deb && \
     echo "AccountID ${GEOIP_ACCOUNTID}\nLicenseKey ${GEOIP_LICENSE}\nEditionIDs GeoLite2-ASN GeoLite2-City GeoLite2-Country" > /etc/GeoIP.conf && \
     geoipupdate
 

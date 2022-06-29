@@ -146,6 +146,9 @@ services:
   syslog-ng:
     build:
       context: ./syslog-ng
+      args:
+          GEOIP_ACCOUNTID: GEOIP_ACCOUNTID_VALUE
+          GEOIP_LICENSE: GEOIP_LICENSE_VALUE      
     logging:
       options:
         max-size: "100m"
