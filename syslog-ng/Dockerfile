@@ -16,7 +16,7 @@ RUN apt-get update \
 
 # SOURCE: https://www.maxmind.com/en/accounts/621041/license-key/create
 RUN set -x; mkdir -p /geoip \
-    && cd /geoip 
+    && cd /geoip \
     && wget https://github.com/maxmind/geoipupdate/releases/download/v4.9.0/geoipupdate_4.9.0_linux_amd64.deb \
     && dpkg -i geoipupdate_4.9.0_linux_amd64.deb \
     && rm -f geoipupdate_4.9.0_linux_amd64.deb \
