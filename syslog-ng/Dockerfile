@@ -20,7 +20,7 @@ RUN set -x; mkdir -p /geoip \
     && wget https://github.com/maxmind/geoipupdate/releases/download/v4.9.0/geoipupdate_4.9.0_linux_amd64.deb \
     && dpkg -i geoipupdate_4.9.0_linux_amd64.deb \
     && rm -f geoipupdate_4.9.0_linux_amd64.deb \
-    && echo "AccountID ${GEOIP_ACCOUNTID}\nLicenseKey ${GEOIP_LICENSE}\nEditionIDs GeoLite2-ASN GeoLite2-City GeoLite2-Country" > /etc/GeoIP.conf \
+    && printf "AccountID ${GEOIP_ACCOUNTID}\nLicenseKey ${GEOIP_LICENSE}\nEditionIDs GeoLite2-ASN GeoLite2-City GeoLite2-Country" > /etc/GeoIP.conf \
     && geoipupdate
 
 # The following "path" variables can differ from the container defaults specified in the entrypoint.sh script.
