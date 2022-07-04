@@ -11,7 +11,7 @@ ENV TZ=Etc/UTC
 
 RUN apt-get update \
     && apt-get -y install --force-yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" software-properties-common \
-    && apt-get -y install --force-yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" mmdb-bin syslog-ng-mod-geoip2 tar gzip autogen autoconf libtool libgeoip-dev wget \
+    && apt-get -y install --force-yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" mmdb-bin syslog-ng-mod-geoip2 tar gzip autogen autoconf libtool libgeoip-dev wget libxml2-utils \
     && apt-get -y install --force-yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" libnet-cidr-lite-perl libtext-csv-xs-perl libgeoip2-perl geoip-database geoip-bin python3-pip python3-jinja2
 
 # SOURCE: https://www.maxmind.com/en/accounts/621041/license-key/create
