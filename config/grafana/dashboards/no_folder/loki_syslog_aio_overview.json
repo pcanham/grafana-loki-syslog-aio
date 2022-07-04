@@ -327,9 +327,14 @@
             "selected": false,
             "text": "wpa_auth_failures",
             "value": "wpa_auth_failures"
+          },
+          {
+            "selected": false,
+            "text": "-",
+            "value": "-"
           }
         ],
-        "query": "info,debug,warn,error,ERR,DNS,auth_failures,wpa_auth_failures",
+        "query": "info,debug,warn,error,ERR,DNS,auth_failures,wpa_auth_failures,-",
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
