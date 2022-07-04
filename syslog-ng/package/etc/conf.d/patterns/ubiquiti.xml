@@ -1,15 +1,16 @@
 <patterndb version='4' pub_date='2022-06-30'>
   <ruleset name='unifi' id='65ac0c8f-139a-c94e-913c-320a05aa90ae'>
     <rules>
-      <rule id='unifi_01' class='system' provider='pcanham'>
+      <!-- accepted packets -->
+      <rule id='unifi_01_accepted' class='system' provider='pcanham'>
         <patterns>
-          <pattern>[@ESTRING:rule_id:]@IN=@ESTRING:interface: @OUT= MAC=@LLADDR:mac_addr:18@ SRC=@IPv4:src_ip:@ DST=@IPv4:dst_ip:@ LEN=@NUMBER::@ TOS=@ESTRING:: @PREC=@ESTRING:: @TTL=@NUMBER:ttl:@ ID=@ESTRING:: @PROTO=@ESTRING:protocol: @TYPE=@ESTRING:: @CODE=@ESTRING:: @[SRC=@IPv4::@ DST=@IPv4::@ LEN=@ESTRING:: @TOS=@ESTRING:: @PREC=@ESTRING:: @TTL=@NUMBER::@ ID=@NUMBER::@ DF PROTO=@ESTRING:: @SPT=@NUMBER:src_port:@ DPT=@NUMBER:dst_port:@ LEN=@NUMBER::@ ] </pattern>
+          <pattern>[@ESTRING:rule_id:-A]@IN=@ESTRING:interface: @OUT= MAC=@LLADDR:mac_addr:18@ SRC=@IPv4:src_ip:@ DST=@IPv4:dst_ip:@ LEN=@NUMBER::@ TOS=@ESTRING:: @PREC=@ESTRING:: @TTL=@NUMBER:ttl:@ ID=@ESTRING:: @PROTO=@ESTRING:protocol: @TYPE=@ESTRING:: @CODE=@ESTRING:: @[SRC=@IPv4::@ DST=@IPv4::@ LEN=@ESTRING:: @TOS=@ESTRING:: @PREC=@ESTRING:: @TTL=@NUMBER::@ ID=@NUMBER::@ DF PROTO=@ESTRING:: @SPT=@NUMBER:src_port:@ DPT=@NUMBER:dst_port:@ LEN=@NUMBER::@ ] </pattern>
         </patterns>
         <examples>
             <example>
                 <test_message program='kernel'>[LAN_LOCAL-default-A]IN=eth1.102 OUT= MAC=f4:92:bf:7f:ef:38:00:0c:29:75:98:3e:08:00:45:c0:00:9b SRC=10.98.2.26 DST=10.98.2.254 LEN=155 TOS=0x00 PREC=0xC0 TTL=64 ID=61901 PROTO=ICMP TYPE=3 CODE=3 [SRC=10.98.2.254 DST=10.98.2.26 LEN=127 TOS=0x00 PREC=0x00 TTL=64 ID=51984 DF PROTO=UDP SPT=52758 DPT=513 LEN=107 ] </test_message>
                 <test_values>
-                  <test_value name="rule_id">LAN_LOCAL-default-A</test_value>
+                  <test_value name="rule_id">LAN_LOCAL-default</test_value>
                   <test_value name="interface">eth1.102</test_value>
                   <test_value name="mac_addr">f4:92:bf:7f:ef:38:00:0c:29:75:98:3e:08:00:45:c0:00:9b</test_value>
                   <test_value name="src_ip">10.98.2.26</test_value>
@@ -19,6 +20,155 @@
                   <test_value name="src_port">52758</test_value>
                   <test_value name="dst_port">513</test_value>
                 </test_values>
+            </example>
+        </examples>
+      </rule>
+      <!-- dropped packets -->
+      <rule id='unifi_01_dropped' class='system' provider='pcanham'>
+        <patterns>
+          <pattern>[@ESTRING:rule_id:-D]@IN=@ESTRING:interface: @OUT= MAC=@LLADDR:mac_addr:18@ SRC=@IPv4:src_ip:@ DST=@IPv4:dst_ip:@ LEN=@NUMBER::@ TOS=@ESTRING:: @PREC=@ESTRING:: @TTL=@NUMBER:ttl:@ ID=@ESTRING:: @PROTO=@ESTRING:protocol: @TYPE=@ESTRING:: @CODE=@ESTRING:: @[SRC=@IPv4::@ DST=@IPv4::@ LEN=@ESTRING:: @TOS=@ESTRING:: @PREC=@ESTRING:: @TTL=@NUMBER::@ ID=@NUMBER::@ DF PROTO=@ESTRING:: @SPT=@NUMBER:src_port:@ DPT=@NUMBER:dst_port:@ LEN=@NUMBER::@ ] </pattern>
+        </patterns>
+        <examples>
+            <example>
+                <test_message program='kernel'>[LAN_LOCAL-default-D]IN=eth1.102 OUT= MAC=f4:92:bf:7f:ef:38:00:0c:29:75:98:3e:08:00:45:c0:00:9b SRC=10.98.2.26 DST=10.98.2.254 LEN=155 TOS=0x00 PREC=0xC0 TTL=64 ID=61901 PROTO=ICMP TYPE=3 CODE=3 [SRC=10.98.2.254 DST=10.98.2.26 LEN=127 TOS=0x00 PREC=0x00 TTL=64 ID=51984 DF PROTO=UDP SPT=52758 DPT=513 LEN=107 ] </test_message>
+                <test_values>
+                  <test_value name="rule_id">LAN_LOCAL-default</test_value>
+                  <test_value name="interface">eth1.102</test_value>
+                  <test_value name="mac_addr">f4:92:bf:7f:ef:38:00:0c:29:75:98:3e:08:00:45:c0:00:9b</test_value>
+                  <test_value name="src_ip">10.98.2.26</test_value>
+                  <test_value name="dst_ip">10.98.2.254</test_value>
+                  <test_value name="ttl">64</test_value>
+                  <test_value name="protocol">ICMP</test_value>
+                  <test_value name="src_port">52758</test_value>
+                  <test_value name="dst_port">513</test_value>
+                </test_values>
+            </example>
+        </examples>
+      </rule>      
+      <rule id='unifi_03_accepted' class='system' provider='pcanham'>
+        <patterns>
+          <pattern>[@ESTRING:rule_id:-A]@IN=@ESTRING:interface: @OUT= MAC=@LLADDR:mac_addr:18@ SRC=@IPv4:src_ip:@ DST=@IPv4:dst_ip:@ LEN=@NUMBER::@ TOS=@ESTRING:: @PREC=@ESTRING:: @TTL=@NUMBER:ttl:@ ID=@NUMBER::@ DF PROTO=@ESTRING:protocol: @SPT=@NUMBER:src_port:@ DPT=@NUMBER:dst_port:@ WINDOW=@NUMBER::@ RES=@ESTRING:: @@ESTRING::URGP=@@NUMBER::@</pattern>
+        </patterns>
+        <examples>
+            <example>
+                <test_message program='kernel'>[LAN_LOCAL-default-A]IN=eth1.102 OUT= MAC=f4:92:bf:7f:ef:38:00:0c:29:48:fe:62:08:00:45:00:00:34 SRC=10.98.2.20 DST=10.98.2.254 LEN=52 TOS=0x00 PREC=0x00 TTL=64 ID=42530 DF PROTO=TCP SPT=8080 DPT=52948 WINDOW=501 RES=0x00 ACK URGP=0 </test_message>
+                <test_values>
+                  <test_value name="rule_id">LAN_LOCAL-default</test_value>
+                  <test_value name="interface">eth1.102</test_value>
+                  <test_value name="mac_addr">f4:92:bf:7f:ef:38:00:0c:29:48:fe:62:08:00:45:00:00:34</test_value>
+                  <test_value name="src_ip">10.98.2.20</test_value>
+                  <test_value name="dst_ip">10.98.2.254</test_value>
+                  <test_value name="ttl">64</test_value>
+                  <test_value name="protocol">TCP</test_value>
+                  <test_value name="src_port">8080</test_value>
+                  <test_value name="dst_port">52948</test_value>
+                </test_values>
+            </example>
+        </examples>
+      </rule>
+      <rule id='unifi_03_dropped' class='system' provider='pcanham'>
+        <patterns>
+          <pattern>[@ESTRING:rule_id:-D]@IN=@ESTRING:interface: @OUT= MAC=@LLADDR:mac_addr:18@ SRC=@IPv4:src_ip:@ DST=@IPv4:dst_ip:@ LEN=@NUMBER::@ TOS=@ESTRING:: @PREC=@ESTRING:: @TTL=@NUMBER:ttl:@ ID=@NUMBER::@ DF PROTO=@ESTRING:protocol: @SPT=@NUMBER:src_port:@ DPT=@NUMBER:dst_port:@ WINDOW=@NUMBER::@ RES=@ESTRING:: @@ESTRING::URGP=@@NUMBER::@</pattern>
+        </patterns>
+        <examples>
+            <example>
+                <test_message program='kernel'>[LAN_LOCAL-default-D]IN=eth1.102 OUT= MAC=f4:92:bf:7f:ef:38:00:0c:29:48:fe:62:08:00:45:00:00:34 SRC=10.98.2.20 DST=10.98.2.254 LEN=52 TOS=0x00 PREC=0x00 TTL=64 ID=42530 DF PROTO=TCP SPT=8080 DPT=52948 WINDOW=501 RES=0x00 ACK URGP=0 </test_message>
+                <test_values>
+                  <test_value name="rule_id">LAN_LOCAL-default</test_value>
+                  <test_value name="interface">eth1.102</test_value>
+                  <test_value name="mac_addr">f4:92:bf:7f:ef:38:00:0c:29:48:fe:62:08:00:45:00:00:34</test_value>
+                  <test_value name="src_ip">10.98.2.20</test_value>
+                  <test_value name="dst_ip">10.98.2.254</test_value>
+                  <test_value name="ttl">64</test_value>
+                  <test_value name="protocol">TCP</test_value>
+                  <test_value name="src_port">8080</test_value>
+                  <test_value name="dst_port">52948</test_value>
+                </test_values>
+            </example>
+        </examples>
+      </rule>
+      <rule id='unifi_04_accepted' class='system' provider='pcanham'>
+        <patterns>
+          <pattern>[@ESTRING:rule_id:-A]@IN=@ESTRING:interface: @OUT= MAC=@LLADDR:mac_addr:18@ SRC=@IPv4:src_ip:@ DST=@IPv4:dst_ip:@ LEN=@NUMBER::@ TOS=@ESTRING:: @PREC=@ESTRING:: @TTL=@NUMBER:ttl: @ ID=@NUMBER::@ DF PROTO=@ESTRING:protocol: @SPT=@NUMBER:src_port:@ DPT=@NUMBER:dst_port:@ LEN=@NUMBER::@ </pattern>
+        </patterns>
+        <examples>
+            <example>
+                <test_message program='kernel'>[LAN_LOCAL-default-A]IN=eth1.102 OUT= MAC=ff:ff:ff:ff:ff:ff:00:0c:29:29:db:10:08:00:45:00:00:31 SRC=10.98.2.249 DST=10.98.2.255 LEN=49 TOS=0x00 PREC=0x00 TTL=64 ID=7059 DF PROTO=UDP SPT=43778 DPT=32412 LEN=29 </test_message>
+                <test_values>
+                  <test_value name="rule_id">LAN_LOCAL-default</test_value>
+                  <test_value name="interface">eth1.102</test_value>
+                  <test_value name="mac_addr">ff:ff:ff:ff:ff:ff:00:0c:29:29:db:10:08:00:45:00:00:31</test_value>
+                  <test_value name="src_ip">10.98.2.249</test_value>
+                  <test_value name="dst_ip">10.98.2.255</test_value>
+                  <test_value name="ttl">64</test_value>
+                  <test_value name="protocol">UDP</test_value>
+                  <test_value name="src_port">43778</test_value>
+                  <test_value name="dst_port">32412</test_value>
+                </test_values>                
+            </example>
+        </examples>
+      </rule>
+      <rule id='unifi_04_dropped' class='system' provider='pcanham'>
+        <patterns>
+          <pattern>[@ESTRING:rule_id:-D]@IN=@ESTRING:interface: @OUT= MAC=@LLADDR:mac_addr:18@ SRC=@IPv4:src_ip:@ DST=@IPv4:dst_ip:@ LEN=@NUMBER::@ TOS=@ESTRING:: @PREC=@ESTRING:: @TTL=@NUMBER:ttl: @ ID=@NUMBER::@ DF PROTO=@ESTRING:protocol: @SPT=@NUMBER:src_port:@ DPT=@NUMBER:dst_port:@ LEN=@NUMBER::@ </pattern>
+        </patterns>
+        <examples>
+            <example>
+                <test_message program='kernel'>[LAN_LOCAL-default-D]IN=eth1.102 OUT= MAC=ff:ff:ff:ff:ff:ff:00:0c:29:29:db:10:08:00:45:00:00:31 SRC=10.98.2.249 DST=10.98.2.255 LEN=49 TOS=0x00 PREC=0x00 TTL=64 ID=7059 DF PROTO=UDP SPT=43778 DPT=32412 LEN=29 </test_message>
+                <test_values>
+                  <test_value name="rule_id">LAN_LOCAL-default</test_value>
+                  <test_value name="interface">eth1.102</test_value>
+                  <test_value name="mac_addr">ff:ff:ff:ff:ff:ff:00:0c:29:29:db:10:08:00:45:00:00:31</test_value>
+                  <test_value name="src_ip">10.98.2.249</test_value>
+                  <test_value name="dst_ip">10.98.2.255</test_value>
+                  <test_value name="ttl">64</test_value>
+                  <test_value name="protocol">UDP</test_value>
+                  <test_value name="src_port">43778</test_value>
+                  <test_value name="dst_port">32412</test_value>
+                </test_values>                  
+            </example>
+        </examples>
+      </rule>
+
+      <rule id='unifi_05_accepted' class='system' provider='pcanham'>
+        <patterns>
+          <pattern>[@ESTRING:rule_id:-A]@IN=@ESTRING:interface: @OUT= MAC=@LLADDR:mac_addr:18@ SRC=@IPv4:src_ip:@ DST=@ESTRING:dst_ip: @LEN=@NUMBER::@ TOS=@ESTRING:: @PREC=@ESTRING:: @TTL=@NUMBER:ttl:@ ID=@NUMBER::@ PROTO=@ESTRING:protocol: @SPT=@NUMBER:src_port:@ DPT=@NUMBER:dst_port:@ LEN=@NUMBER::@ MARK=@ESTRING::@</pattern>
+        </patterns>
+        <examples>
+            <example>
+                <test_message program='kernel'>[LAN_LOCAL-default-A]IN=eth1 OUT= MAC=ff:ff:ff:ff:ff:ff:24:5a:4c:5a:de:cd:08:00 SRC=10.98.0.14 DST=255.255.255.255 LEN=328 TOS=0x00 PREC=0x00 TTL=64 ID=0 PROTO=UDP SPT=68 DPT=67 LEN=308 MARK=0x65000000</test_message>
+                <test_values>
+                  <test_value name="rule_id">LAN_LOCAL-default</test_value>
+                  <test_value name="interface">eth1</test_value>
+                  <test_value name="mac_addr">ff:ff:ff:ff:ff:ff:24:5a:4c:5a:de:cd:08:00</test_value>
+                  <test_value name="src_ip">10.98.0.14</test_value>
+                  <test_value name="dst_ip">255.255.255.255</test_value>
+                  <test_value name="ttl">64</test_value>
+                  <test_value name="protocol">UDP</test_value>
+                  <test_value name="src_port">68</test_value>
+                  <test_value name="dst_port">67</test_value>
+                </test_values>                  
+            </example>
+        </examples>
+      </rule>
+      <rule id='unifi_05_dropped' class='system' provider='pcanham'>
+        <patterns>
+          <pattern>[@ESTRING:rule_id:-D]@IN=@ESTRING:interface: @OUT= MAC=@LLADDR:mac_addr:18@ SRC=@IPv4:src_ip:@ DST=@ESTRING:dst_ip: @LEN=@NUMBER::@ TOS=@ESTRING:: @PREC=@ESTRING:: @TTL=@NUMBER:ttl:@ ID=@NUMBER::@ PROTO=@ESTRING:protocol: @SPT=@NUMBER:src_port:@ DPT=@NUMBER:dst_port:@ LEN=@NUMBER::@ MARK=@ESTRING::@</pattern>
+        </patterns>
+        <examples>
+            <example>
+                <test_message program='kernel'>[LAN_LOCAL-default-A]IN=eth1 OUT= MAC=ff:ff:ff:ff:ff:ff:24:5a:4c:5a:de:cd:08:00 SRC=10.98.0.14 DST=255.255.255.255 LEN=328 TOS=0x00 PREC=0x00 TTL=64 ID=0 PROTO=UDP SPT=68 DPT=67 LEN=308 MARK=0x65000000</test_message>
+                <test_values>
+                  <test_value name="rule_id">LAN_LOCAL-default</test_value>
+                  <test_value name="interface">eth1</test_value>
+                  <test_value name="mac_addr">ff:ff:ff:ff:ff:ff:24:5a:4c:5a:de:cd:08:00</test_value>
+                  <test_value name="src_ip">10.98.0.14</test_value>
+                  <test_value name="dst_ip">255.255.255.255</test_value>
+                  <test_value name="ttl">64</test_value>
+                  <test_value name="protocol">UDP</test_value>
+                  <test_value name="src_port">68</test_value>
+                  <test_value name="dst_port">67</test_value>
+                </test_values>                  
             </example>
         </examples>
       </rule>
@@ -35,48 +185,7 @@
                 </test_values>                          
             </example>
         </examples>
-      </rule>
-      <rule id='unifi_03' class='system' provider='pcanham'>
-        <patterns>
-          <pattern>[@ESTRING:rule_id:]@IN=@ESTRING:interface: @OUT= MAC=@LLADDR:mac_addr:18@ SRC=@IPv4:src_ip:@ DST=@IPv4:dst_ip:@ LEN=@NUMBER::@ TOS=@ESTRING:: @PREC=@ESTRING:: @TTL=@NUMBER:ttl:@ ID=@NUMBER::@ DF PROTO=@ESTRING:protocol: @SPT=@NUMBER:src_port:@ DPT=@NUMBER:dst_port:@ WINDOW=@NUMBER::@ RES=@ESTRING:: @@ESTRING::URGP=@@NUMBER::@</pattern>
-        </patterns>
-        <examples>
-            <example>
-                <test_message program='kernel'>[LAN_LOCAL-default-A]IN=eth1.102 OUT= MAC=f4:92:bf:7f:ef:38:00:0c:29:48:fe:62:08:00:45:00:00:34 SRC=10.98.2.20 DST=10.98.2.254 LEN=52 TOS=0x00 PREC=0x00 TTL=64 ID=42530 DF PROTO=TCP SPT=8080 DPT=52948 WINDOW=501 RES=0x00 ACK URGP=0 </test_message>
-                <test_values>
-                  <test_value name="rule_id">LAN_LOCAL-default-A</test_value>
-                  <test_value name="interface">eth1.102</test_value>
-                  <test_value name="mac_addr">f4:92:bf:7f:ef:38:00:0c:29:48:fe:62:08:00:45:00:00:34</test_value>
-                  <test_value name="src_ip">10.98.2.20</test_value>
-                  <test_value name="dst_ip">10.98.2.254</test_value>
-                  <test_value name="ttl">64</test_value>
-                  <test_value name="protocol">TCP</test_value>
-                  <test_value name="src_port">8080</test_value>
-                  <test_value name="dst_port">52948</test_value>
-                </test_values>
-            </example>
-        </examples>
-      </rule>
-      <rule id='unifi_04' class='system' provider='pcanham'>
-        <patterns>
-          <pattern>[@ESTRING:rule_id:]@IN=@ESTRING:interface: @OUT= MAC=@LLADDR:mac_addr:18@ SRC=@IPv4:src_ip:@ DST=@IPv4:dst_ip:@ LEN=@NUMBER::@ TOS=@ESTRING:: @PREC=@ESTRING:: @TTL=@NUMBER:ttl: @ ID=@NUMBER::@ DF PROTO=@ESTRING:protocol: @SPT=@NUMBER:src_port:@ DPT=@NUMBER:dst_port:@ LEN=@NUMBER::@ </pattern>
-        </patterns>
-        <examples>
-            <example>
-                <test_message program='kernel'>[LAN_LOCAL-default-A]IN=eth1.102 OUT= MAC=ff:ff:ff:ff:ff:ff:00:0c:29:29:db:10:08:00:45:00:00:31 SRC=10.98.2.249 DST=10.98.2.255 LEN=49 TOS=0x00 PREC=0x00 TTL=64 ID=7059 DF PROTO=UDP SPT=43778 DPT=32412 LEN=29 </test_message>
-            </example>
-        </examples>
-      </rule>
-      <rule id='unifi_05' class='system' provider='pcanham'>
-        <patterns>
-          <pattern>[@ESTRING:rule_id:]@IN=@ESTRING:interface: @OUT= MAC=@LLADDR:mac_addr:18@ SRC=@IPv4:src_ip:@ DST=@ESTRING:dst_ip: @LEN=@NUMBER::@ TOS=@ESTRING:: @PREC=@ESTRING:: @TTL=@NUMBER:ttl:@ ID=@NUMBER::@ PROTO=@ESTRING:protocol: @SPT=@NUMBER:src_port:@ DPT=@NUMBER:dst_port:@ LEN=@NUMBER::@ MARK=@ESTRING::@</pattern>
-        </patterns>
-        <examples>
-            <example>
-                <test_message program='kernel'>[LAN_LOCAL-default-A]IN=eth1 OUT= MAC=ff:ff:ff:ff:ff:ff:24:5a:4c:5a:de:cd:08:00 SRC=10.98.0.14 DST=255.255.255.255 LEN=328 TOS=0x00 PREC=0x00 TTL=64 ID=0 PROTO=UDP SPT=68 DPT=67 LEN=308 MARK=0x65000000</test_message>
-            </example>
-        </examples>
-      </rule>
+      </rule>      
       <rule id='unifi_06' class='system' provider='pcanham'>
         <patterns>
           <pattern>@ESTRING:request_type: @for @IPv4:client_ip:@ from @MACADDR:mac_addr:@ (@ESTRING:device_name:)@ via@ESTRING:interface:@</pattern>
