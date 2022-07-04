@@ -63,13 +63,16 @@ services:
     volumes:
     - ./config/loki-config-s3.yml:/etc/loki/loki-config.yml:ro
   minio:
-    command: -c 'mkdir -p /data/loki && /usr/bin/docker-entrypoint.sh minio server /data'
+    command: -c 'mkdir -p /data/loki && /usr/bin/docker-entrypoint.sh minio server /data --console-address ":9001"'
     container_name: minio
     entrypoint: sh
     environment:
       MINIO_ACCESS_KEY: minio123
       MINIO_PROMETHEUS_AUTH_TYPE: public
       MINIO_SECRET_KEY: minio456
+      # Newer versions of minio uses these env variables.
+      MINIO_ROOT_USER: minio123
+      MINIO_ROOT_PASSWORD: minio456
     healthcheck:
       interval: 30s
       retries: 3
@@ -89,6 +92,8 @@ services:
     ports:
     - published: 9000
       target: 9000
+    - published: 9001
+      target: 9001   
     restart: always
   node-exporter:
     command: --path.rootfs=/host
