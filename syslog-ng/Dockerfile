@@ -15,8 +15,7 @@ RUN apt-get update \
     && apt-get -y install --force-yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" libnet-cidr-lite-perl libtext-csv-xs-perl libgeoip2-perl geoip-database geoip-bin python3-pip python3-jinja2
 
 # SOURCE: https://www.maxmind.com/en/accounts/621041/license-key/create
-RUN set -x; mkdir -p /geoip \
-    && cd /geoip \
+RUN set -x; cd /tmp \
     && wget https://github.com/maxmind/geoipupdate/releases/download/v4.9.0/geoipupdate_4.9.0_linux_amd64.deb \
     && dpkg -i geoipupdate_4.9.0_linux_amd64.deb \
     && rm -f geoipupdate_4.9.0_linux_amd64.deb \
