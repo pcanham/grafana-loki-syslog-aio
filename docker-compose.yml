@@ -20,7 +20,7 @@ services:
     - /sys:/sys:ro
     - /var/lib/docker:/var/lib/docker:ro
   grafana:
-    image: grafana/grafana:9.0.2
+    image: grafana/grafana:9.3.6
     container_name: grafana
     environment:
       GF_AUTH_ANONYMOUS_ENABLED: "true"
@@ -47,7 +47,7 @@ services:
     - ./config/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
     - ./config/grafana/dashboards:/var/lib/grafana/dashboards:ro
   loki:
-    image: grafana/loki:2.5.0
+    image: grafana/loki:2.7.3
     command: -config.file=/etc/loki/loki-config.yml
     container_name: loki
     depends_on:
@@ -132,7 +132,7 @@ services:
     volumes:
     - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
   promtail:
-    image: grafana/promtail:2.4.2
+    image: grafana/promtail:2.7.3
     command: -config.file=/etc/promtail/promtail-config.yml
     container_name: promtail
     logging:
