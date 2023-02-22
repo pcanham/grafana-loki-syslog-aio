@@ -16,9 +16,9 @@ RUN apt-get update \
 
 # SOURCE: https://www.maxmind.com/en/accounts/621041/license-key/create
 RUN set -x; cd /tmp \
-    && wget https://github.com/maxmind/geoipupdate/releases/download/v4.9.0/geoipupdate_4.9.0_linux_amd64.deb \
-    && dpkg -i geoipupdate_4.9.0_linux_amd64.deb \
-    && rm -f geoipupdate_4.9.0_linux_amd64.deb \
+    && wget https://github.com/maxmind/geoipupdate/releases/download/v4.10.0/geoipupdate_4.10.0_linux_amd64.deb \
+    && dpkg -i geoipupdate_4.10.0_linux_amd64.deb \
+    && rm -f geoipupdate_4.10.0_linux_amd64.deb \
     && printf "AccountID ${GEOIP_ACCOUNTID}\nLicenseKey ${GEOIP_LICENSE}\nEditionIDs GeoLite2-ASN GeoLite2-City GeoLite2-Country" > /etc/GeoIP.conf \
     && geoipupdate
 
@@ -38,5 +38,5 @@ COPY package/etc/context_templates /etc/syslog-ng/context_templates
 # # SOURCE: https://dev.maxmind.com/geoip/geoip2/geolite2/
 
 # https://github.com/splunk/splunk-connect-for-syslog/blob/main/package/Dockerfile
-# RUN curl -fsSL https://goss.rocks/install | GOSS_VER=v0.3.16 sh
+# RUN curl -fsSL https://goss.rocks/install | GOSS_VER=v0.3.21 sh
 # COPY package/etc/goss.yaml /etc/syslog-ng/goss.yaml

@@ -152,7 +152,7 @@ services:
     volumes:
     - ./config/promtail-config.yml:/etc/promtail/promtail-config.yml:ro
   syslog-ng:
-    image: pcanham/syslog-ng:0.1.0
+    image: pcanham/syslog-ng:0.1.1
     build:
       context: ./syslog-ng
       args:
