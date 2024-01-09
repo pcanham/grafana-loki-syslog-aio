@@ -16,9 +16,9 @@ RUN apt-get update \
 
 # SOURCE: https://www.maxmind.com/en/accounts/621041/license-key/create
 RUN set -x; cd /tmp \
-    && wget https://github.com/maxmind/geoipupdate/releases/download/v4.10.0/geoipupdate_4.10.0_linux_amd64.deb \
-    && dpkg -i geoipupdate_4.10.0_linux_amd64.deb \
-    && rm -f geoipupdate_4.10.0_linux_amd64.deb \
+    && wget https://github.com/maxmind/geoipupdate/releases/download/v6.0.0/geoipupdate_6.0.0_linux_amd64.deb \
+    && dpkg -i geoipupdate_6.0.0_linux_amd64.deb \
+    && rm -f geoipupdate_6.0.0_linux_amd64.deb \
     && printf "AccountID ${GEOIP_ACCOUNTID}\nLicenseKey ${GEOIP_LICENSE}\nEditionIDs GeoLite2-ASN GeoLite2-City GeoLite2-Country" > /etc/GeoIP.conf \
     && geoipupdate
 
